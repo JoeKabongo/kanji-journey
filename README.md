@@ -1,20 +1,21 @@
 # Kanji Journey 🈶
 
-A full-stack Japanese learning app that helps users visually explore and study kanji characters.
+Kanji Journey is a web app designed to help users master the kanji needed to pass the JLPT exams (N5–N1).
+It offers a personalized study experience with kanji lists, quizzes, and progress tracking.
+
+## Features (Planned)
+
+- 📚 Browse kanji lists by JLPT level.
+- 📝 Mark kanji as learned and add personal notes.
+- 🧠 Practice zone with quizzes based on learning status.
+- 📈 Visualize progress with charts (e.g., kanji learned over time, % memorized).
+- 🔎 Search and view detailed information about any kanji.
 
 ## Tech Stack
 
 - **Frontend**: React + TypeScript
 - **Backend**: Node.js + Express + TypeScript
 - **Database**: (To be decided — maybe MongoDB or PostgreSQL)
-
-## Features (Planned)
-
-- 🧠 Learn kanji through **mnemonics**, **visuals**, and **JLPT Level**
-- 📝 Track your **progress** and see what kanji you've learned
-- 🔍 Search kanji by **meaning**, **reading**, or **stroke count**
-- 📊 Visualize **learning paths** to guide your study
-- 🧪 Test your **kanji knowledge** through interactive **quizzes**
 
 ## Setup
 
