@@ -17,6 +17,10 @@ It offers a personalized study experience with kanji lists, quizzes, and progres
 - **Backend**: Node.js + Express + TypeScript
 - **Database**: (To be decided — maybe MongoDB or PostgreSQL)
 
+## Design
+
+For a full feature breakdown, see [Full Design Document](https://github.com/JoeKabongo/kanji-journey/blob/main/docs/kanji-journey-design.md)
+
 ## Setup
 
 ```bash
