@@ -1,8 +1,11 @@
 import express from 'express'
 import cors from 'cors'
+import routes from './routes/index'
 
 const app = express()
 app.use(cors(), express.json())
+
+app.use('/api', routes)
 
 app.get('/', (_req, res) => {
   res.send({ status: 'OK' })
