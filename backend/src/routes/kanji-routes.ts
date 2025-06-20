@@ -1,8 +1,14 @@
 import { Router } from 'express'
-import { getJlptLevels } from '../controllers/kanji-controller'
+import {
+  getJlptLevels,
+  getKanjiByJlptLevel,
+  getKanjiDetails,
+} from '../controllers/kanji-controller'
 
 const router = Router()
 
 router.get('/jlpt-levels', getJlptLevels)
+router.get('/jlpt-levels/:level', getKanjiByJlptLevel)
+router.get('/:kanjiId', getKanjiDetails)
 
 export default router

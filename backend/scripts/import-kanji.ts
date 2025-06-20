@@ -17,8 +17,12 @@ interface JishoResponse {
   data: JishoEntry[]
 }
 
+// Utility: simple sleep function to slow down requests and avoid rate limits
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
+/**
+ * Fetches a list of kanji characters for a specific JLPT level from kanjiapi.dev
+ */
 const fetchJlptLevelKanjiList = async (
   jlptLevel: number
 ): Promise<string[]> => {
@@ -39,6 +43,9 @@ const fetchJlptLevelKanjiList = async (
   }
 }
 
+/**
+ * Fetches detailed information for a single kanji (meanings, readings, strokes, etc.)
+ */
 const fetchKanjiDetails = async (kanji: string): Promise<KanjiDetails> => {
   try {
     const res = await fetch(`https://kanjiapi.dev/v1/kanji/${kanji}`)
@@ -51,6 +58,10 @@ const fetchKanjiDetails = async (kanji: string): Promise<KanjiDetails> => {
   }
 }
 
+/**
+ * Fetches example word usages for a given kanji from Jisho.org
+ * Note: Jisho requires a browser-like User-Agent header to avoid 403s
+ */
 const fetchKanjiWordExamples = async (kanji: string): Promise<string[]> => {
   try {
     const res = await fetch(
@@ -74,6 +85,9 @@ const fetchKanjiWordExamples = async (kanji: string): Promise<string[]> => {
   }
 }
 
+/**
+ * Main function to fetch JLPT kanji, enrich with API data, and insert into Postgres
+ */
 const importKanjiData = async () => {
   try {
     const levels = [5, 4, 3, 2, 1]
@@ -110,4 +124,5 @@ const importKanjiData = async () => {
   }
 }
 
+// Kick off the import when script is run
 importKanjiData()
