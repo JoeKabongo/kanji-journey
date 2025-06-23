@@ -40,7 +40,7 @@ export const fetchJlptKanjisByLevel = async (
 // Fetches detailed kanji info for a specific ID (assumes ID is numeric)
 export const fetchKanjiDetails = async (
   id: string
-): Promise<KanjiDetails[]> => {
+): Promise<KanjiDetails | null> => {
   try {
     const result = await db.oneOrNone(
       `SELECT * FROM kanji_entries where id= $1`,
