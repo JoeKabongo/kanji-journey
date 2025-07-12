@@ -3,7 +3,7 @@
 import { Request, Response } from 'express'
 import * as controller from '../../src/controllers/kanji-controller'
 import * as service from '../../src/services/kanji-service'
-import { KanjiDetails } from '../../src/types/kanji-details'
+import { KanjiDetails } from '@shared/types/kanji-details'
 
 describe('Kanji Controller', () => {
   // Test for getJlptLevels controller method
@@ -58,7 +58,7 @@ describe('Kanji Controller', () => {
       expect(res.json).toHaveBeenCalledWith(mockKanjis)
     })
 
-    it('should return 400 if JLPT level is invalid', async () => {
+    it('should return 200, empty lists', async () => {
       const req = {
         params: { level: '9' }, // Invalid level
         query: {},
@@ -71,8 +71,7 @@ describe('Kanji Controller', () => {
 
       await controller.getKanjiByJlptLevel(req, res)
 
-      expect(res.status).toHaveBeenCalledWith(400)
-      expect(res.send).toHaveBeenCalledWith('Invalid JLPT level')
+      expect(res.status).toHaveBeenCalledWith(200)
     })
   })
 

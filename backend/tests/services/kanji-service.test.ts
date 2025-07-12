@@ -3,7 +3,7 @@
 
 import * as service from '../../src/services/kanji-service'
 import db from '../../src/db'
-import { KanjiSummary } from '../../src/types/kanji-summary'
+import { KanjiSummary } from '@shared/types/kanji-summary'
 
 describe('Kanji Service', () => {
   // Reset and seed JLPT levels before each test group
@@ -39,7 +39,7 @@ describe('Kanji Service', () => {
 
     // Test with limit 2: should return both kanji
     it('fetchJlptKanjisByLevel should return kanji list for jlpt level', async () => {
-      const result = await service.fetchJlptKanjisByLevel('5', 2)
+      const result = await service.fetchJlptKanjisByLevel('N5', 2)
       expect(result.length).toBe(2)
       expect(result[0].character).toEqual('日')
       expect(result[1].character).toEqual('昨')
@@ -47,7 +47,7 @@ describe('Kanji Service', () => {
 
     // Test with limit 1: should return only 1 kanji
     it('fetchJlptKanjisByLevel should return kanji list for jlpt level, limit 1', async () => {
-      const result = await service.fetchJlptKanjisByLevel('5', 1)
+      const result = await service.fetchJlptKanjisByLevel('N5', 1)
       expect(result.length).toBe(1)
       expect(result[0].character).toEqual('日')
     })

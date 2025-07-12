@@ -1,7 +1,7 @@
 import db from '../db'
-import { KanjiDetails } from '../types/kanji-details'
-import { KanjiSummary } from '../types/kanji-summary'
-import { JlptLevel } from '../types/jlpt-level'
+import { KanjiDetails } from '@shared/types/kanji-details'
+import { KanjiSummary } from '@shared/types/kanji-summary'
+import { JlptLevel } from '@shared/types/jlpt-level'
 
 // Fetches all JLPT levels
 export const fetchJlptLevels = async (): Promise<JlptLevel[]> => {
@@ -18,12 +18,10 @@ export const fetchJlptLevels = async (): Promise<JlptLevel[]> => {
 
 // Fetches a summary list of kanji (id + character) for a given JLPT level
 export const fetchJlptKanjisByLevel = async (
-  jlptLevelRaw: string,
+  jlptLevel: string,
   limit?: number
 ): Promise<KanjiSummary[]> => {
   try {
-    const jlptLevel = `N${jlptLevelRaw}` // Format it as 'N5', 'N2', etc.
-
     const result = await db.query(
       `SELECT id, character FROM kanji_entries where jlpt_level= $1 ${
         limit ? 'LIMIT $2' : ''

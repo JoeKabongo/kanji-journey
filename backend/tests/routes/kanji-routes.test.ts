@@ -4,9 +4,9 @@
 import request from 'supertest'
 import app from '../../src/index'
 import db from '../../src/db/index'
-import { KanjiSummary } from '../../src/types/kanji-summary'
-import { JlptLevel } from '../../src/types/jlpt-level'
-import { KanjiDetails } from '../../src/types/kanji-details'
+import { KanjiSummary } from '@shared/types/kanji-summary'
+import { JlptLevel } from '@shared/types/jlpt-level'
+import { KanjiDetails } from '@shared/types/kanji-details'
 
 describe('GET /api/kanji/jlpt-levels', () => {
   it('should return all JLPT levels with status 200', async () => {
@@ -35,7 +35,7 @@ describe('GET /api/kanji/jlpt-levels/5', () => {
         VALUES ('10', '日', ARRAY['sun'], ARRAY['ニチ'], ARRAY['ひ'], 'N5', 4);
       `)
 
-    const res = await request(app).get('/api/kanji/jlpt-levels/5')
+    const res = await request(app).get('/api/kanji/jlpt-levels/N5')
     expect(res.status).toBe(200)
 
     // Assert the response contains the expected kanji
@@ -47,7 +47,7 @@ describe('GET /api/kanji/jlpt-levels/5', () => {
   it('should return empty array if no kanjis exist for N5', async () => {
     await db.none(`TRUNCATE kanji_entries RESTART IDENTITY CASCADE`)
 
-    const res = await request(app).get('/api/kanji/jlpt-levels/5')
+    const res = await request(app).get('/api/kanji/jlpt-levels/N5')
     expect(res.status).toBe(200)
     expect(Array.isArray(res.body)).toBe(true)
     expect(res.body.length).toBe(0)
@@ -55,7 +55,7 @@ describe('GET /api/kanji/jlpt-levels/5', () => {
 })
 
 describe('GET /api/kanji/jlpt-levels/whatever', () => {
-  it('should return a 400 status for invalid JLPT level', async () => {
+  it('should return empty list', async () => {
     await db.none(`TRUNCATE kanji_entries RESTART IDENTITY CASCADE`)
     await db.none(`
           INSERT INTO kanji_entries (id, character, meanings, onyomi, kunyomi, jlpt_level, stroke_count)
@@ -63,7 +63,9 @@ describe('GET /api/kanji/jlpt-levels/whatever', () => {
         `)
 
     const res = await request(app).get('/api/kanji/jlpt-levels/whatever')
-    expect(res.status).toBe(400)
+    expect(res.status).toBe(200)
+    expect(Array.isArray(res.body)).toBe(true)
+    expect(res.body.length).toBe(0)
   })
 })
 

@@ -4,7 +4,7 @@ import {
   fetchJlptKanjisByLevel,
   fetchKanjiDetails,
 } from '../services/kanji-service'
-import { JlptLevel } from '../types/jlpt-level'
+import { JlptLevel } from '@shared/types/jlpt-level'
 
 // Controller to return all JLPT levels from the database
 export const getJlptLevels = async (req: Request, res: Response) => {
@@ -21,11 +21,6 @@ export const getJlptLevels = async (req: Request, res: Response) => {
 export const getKanjiByJlptLevel = async (req: Request, res: Response) => {
   const { level } = req.params
   const { limit } = req.query
-
-  if (!level || !['5', '4', '3', '2', '1'].includes(level)) {
-    res.status(400).send('Invalid JLPT level')
-    return
-  }
 
   try {
     const parsedLimit = limit ? parseInt(limit as string, 10) : undefined
