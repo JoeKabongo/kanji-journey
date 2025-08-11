@@ -3,10 +3,21 @@ import jlptImage from '../../assets/jlptImage.png'
 import jlptImage1 from '../../assets/jlptImage2.png'
 import { useNavigate } from 'react-router'
 
+/**
+ * @interface ComponentProps
+ * Defines the props required by the KanjiLevelCard component.
+ * @param {number} index - The display order of the card, used to alternate images.
+ * @param {JlptLevel} jlptLevel - The JLPT level data to display.
+ */
 interface ComponentProps {
   index: number
   jlptLevel: JlptLevel
 }
+
+/**
+ * Renders a clickable card representing a single JLPT level.
+ * Navigates to the corresponding kanji list page when clicked.
+ */
 const KanjiLevelCard = ({ index, jlptLevel }: ComponentProps) => {
   const navigate = useNavigate()
   return (

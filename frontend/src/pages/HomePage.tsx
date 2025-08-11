@@ -2,7 +2,13 @@ import KanjiLevelCard from '../components/kanji/KanjiLevelCard'
 import { fetchJlptLevels } from '../services/kanjiService'
 import { useQuery } from '@tanstack/react-query'
 
+/**
+ * Renders the application's main landing page.
+ * It displays a welcome message and a series of navigation cards,
+ * each corresponding to a JLPT level.
+ */
 const HomePage = () => {
+  // Fetch all available JLPT levels to generate the navigation cards.
   const {
     status,
     error,

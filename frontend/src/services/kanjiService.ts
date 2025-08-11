@@ -1,21 +1,24 @@
-import axios from 'axios'
+import apiClient from './apiClient' // Import the centralized instance
 import { JlptLevel } from '../../../shared/types/jlpt-level'
 import { KanjiSummary } from '../../../shared/types/kanji-summary'
 
-const API_END_POINT = 'http://localhost:4000/api'
-
+/**
+ * Fetches the list of all available JLPT levels.
+ */
 export const fetchJlptLevels = async (): Promise<JlptLevel[]> => {
-  const response = await axios.get<JlptLevel[]>(
-    `${API_END_POINT}/kanji/jlpt-levels`
-  )
+  // No need to construct the full URL anymore
+  const response = await apiClient.get<JlptLevel[]>('/kanji/jlpt-levels')
   return response.data
 }
 
+/**
+ * Fetches all Kanji characters for a specific JLPT level.
+ */
 export const fetchKanjisByLevel = async (
   level: string
 ): Promise<KanjiSummary[]> => {
-  const response = await axios.get<KanjiSummary[]>(
-    `${API_END_POINT}/kanji/jlpt-levels/${level}`
+  const response = await apiClient.get<KanjiSummary[]>(
+    `/kanji/jlpt-levels/${level}`
   )
   return response.data
 }

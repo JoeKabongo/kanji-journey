@@ -1,24 +1,35 @@
+import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+
+/**
+ * Renders the main site-wide navigation bar.
+ */
 const Navbar = () => {
+  const { isAuthenticated } = useAuth()
   return (
     <nav className="fixed top-0 left-0 right-0  flex justify-between p-5 font-sans font-medium border-b border-gray-200 z-50 bg-white">
       <div>
-        <a href="/" className="text-xl">
+        <Link to="/" className="text-xl">
           ShinKanji
-        </a>
+        </Link>
       </div>
       <div>
         <ul className="flex space-x-10 content-center">
           <li>
-            <a href="/kanjis"> Kanjis </a>
+            <Link to="/kanjis"> Kanjis </Link>
           </li>
           <li>
-            <a href="/deck"> My decks </a>
+            <Link to="/deck"> My decks </Link>
           </li>
           <li>
-            <a href="/quiz"> Quiz Zone </a>
+            <Link to="/quiz"> Quiz Zone </Link>
           </li>
           <li>
-            <a href="/profile max-h-max bg--200">Profile</a>
+            {isAuthenticated ? (
+              <Link to="/profile">Profile</Link>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
           </li>
         </ul>
       </div>
