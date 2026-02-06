@@ -3,6 +3,7 @@ import {
   fetchJlptLevels,
   fetchJlptKanjisByLevel,
   fetchKanjiDetails,
+  searchKanji,
 } from '../services/kanji-service'
 
 /**
@@ -36,7 +37,7 @@ export const getKanjiByJlptLevel = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(
       `[getKanjiByJlptLevel] Failed to fetch kanji for level ${level}:`,
-      error
+      error,
     )
     res.status(500).json({ message: 'Internal Server Error' })
   }
@@ -60,8 +61,20 @@ export const getKanjiDetails = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(
       `[getKanjiDetails] Failed to fetch details for kanji ID ${kanjiId}:`,
-      error
+      error,
     )
+    res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
+
+export const findKanji = async (req: Request, res: Response) => {
+  const { character } = req.params
+
+  try {
+    const results = await searchKanji(character)
+    res.status(200).json(results)
+  } catch (error) {
+    console.error('[findKanji] Failed to search kanji:', error)
     res.status(500).json({ message: 'Internal Server Error' })
   }
 }

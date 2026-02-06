@@ -15,7 +15,7 @@ export interface AuthenticationResult {
  * revoking old sessions, and creating new access and refresh tokens.
  */
 export const authenticateViaGoogle = async (
-  googlePayload: TokenPayload
+  googlePayload: TokenPayload,
 ): Promise<AuthenticationResult> => {
   // Find or create a user in the database based on the verified Google payload.
   const user = await findOrCreateUser(googlePayload)
@@ -58,7 +58,7 @@ const findOrCreateUser = async (googlePayload: TokenPayload): Promise<User> => {
 
   let user = await db.oneOrNone<User>(
     `SELECT * FROM users WHERE google_id = $1`,
-    [googleId]
+    [googleId],
   )
 
   // If the user doesn't exist, create a new record.
@@ -69,7 +69,7 @@ const findOrCreateUser = async (googlePayload: TokenPayload): Promise<User> => {
         VALUES ($1, $2, $3, $4)
         RETURNING *
       `,
-      [googleId, email, name, picture]
+      [googleId, email, name, picture],
     )
   }
 
@@ -92,7 +92,7 @@ const generateRefreshToken = async (userId: number): Promise<string> => {
       INSERT INTO refresh_tokens (token, user_id, expires_at)
       VALUES ($1, $2, $3)
     `,
-    [refreshToken, userId, expiresAt]
+    [refreshToken, userId, expiresAt],
   )
 
   return refreshToken

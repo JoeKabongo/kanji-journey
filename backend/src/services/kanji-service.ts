@@ -10,7 +10,7 @@ import { JlptLevel } from '@shared/types/jlpt-level'
 export const fetchJlptLevels = async (): Promise<JlptLevel[]> => {
   try {
     const result = await db.query(
-      'SELECT * FROM jlpt_levels ORDER BY level ASC'
+      'SELECT * FROM jlpt_levels ORDER BY level ASC',
     )
     return result
   } catch (error) {
@@ -27,7 +27,7 @@ export const fetchJlptLevels = async (): Promise<JlptLevel[]> => {
  */
 export const fetchJlptKanjisByLevel = async (
   jlptLevel: string,
-  limit?: number
+  limit?: number,
 ): Promise<KanjiSummary[]> => {
   try {
     const query = `
@@ -51,19 +51,42 @@ export const fetchJlptKanjisByLevel = async (
  * @returns A promise that resolves to a KanjiDetails object, or null if not found.
  */
 export const fetchKanjiDetails = async (
-  id: string
+  id: string,
 ): Promise<KanjiDetails | null> => {
   try {
     const result = await db.oneOrNone(
       `SELECT * FROM kanji_entries WHERE id = $1`,
-      [parseInt(id, 10)] // Ensure the ID is treated as a number.
+      [parseInt(id, 10)], // Ensure the ID is treated as a number.
     )
     return result
   } catch (error) {
     console.error(
       `[fetchKanjiDetails] Failed to fetch kanji with ID ${id}:`,
-      error
+      error,
     )
     throw new Error(`Kanji details fetch from db failed.`)
+  }
+}
+
+/**
+ * Searches for a kanji by its character.
+ * @param {string} character - The kanji character to search for.
+ * @returns A promise that resolves to a KanjiSummary object if found, or null if not found.
+ */
+export const searchKanji = async (
+  character: string,
+): Promise<KanjiSummary | null> => {
+  try {
+    const result = await db.oneOrNone(
+      `SELECT id, character FROM kanji_entries WHERE character= $1`,
+      [character],
+    )
+    return result
+  } catch (error) {
+    console.error(
+      `[searchKanji] Failed to search kanji with character "${character}":`,
+      error,
+    )
+    throw new Error(`Kanji search in db failed.`)
   }
 }
